@@ -15,3 +15,4 @@ Code*
 *.user
 *.csv
 .mbed
+gcc-*
