@@ -20,3 +20,9 @@ jobs:
           mbed config -G GCC_ARM_PATH "${PWD}/gcc-arm-none-eabi-10.3-2021.10/bin"
           mbed deploy
           mbed compile -m SDP_K1 -t GCC_ARM
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          path: |
+            BUILD/SDP_K1/GCC_ARM/precision-converters-firmware.bin
