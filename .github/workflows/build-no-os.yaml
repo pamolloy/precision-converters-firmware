@@ -1,0 +1,31 @@
+name: no-OS
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Build with no-OS
+        run: |
+          set -x
+          pip install mbed-cli
+          wget https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2
+          tar xjf gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2
+          export PATH="${PATH}:${PWD}/gcc-arm-none-eabi-10.3-2021.10/bin"
+          mbed config -G GCC_ARM_PATH "${PWD}/gcc-arm-none-eabi-10.3-2021.10/bin"
+
+          pushd projects/ad4130_iio
+          make clone-lib-repos
+          popd
+
+          pushd libs/no-OS/libraries/mbed/mbed-os
+          pip install -r requirements.txt
+          popd
+
+          pushd projects/ad4130_iio
+          make
+          popd
