@@ -29,3 +29,9 @@ jobs:
           pushd projects/ad4130_iio
           make
           popd
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          path: |
+            projects/ad4130_iio/build/ad4130_iio.bin
