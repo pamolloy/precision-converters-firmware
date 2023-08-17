@@ -31,6 +31,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Update submodules recursively
+        run: |
+          git submodule update --init --recursive
+
       - name: Build with no-OS
         run: |
           set -x
@@ -40,11 +44,7 @@ jobs:
           export PATH="${PATH}:${PWD}/gcc-arm-none-eabi-10.3-2021.10/bin"
           mbed config -G GCC_ARM_PATH "${PWD}/gcc-arm-none-eabi-10.3-2021.10/bin"
 
-          pushd projects/${{ matrix.project }}
-          make clone-lib-repos
-          popd
-
-          pushd libs/no-OS/libraries/mbed/mbed-os
+          pushd libraries/no-OS/libraries/mbed/mbed-os
           pip install -r requirements.txt
           popd
 
