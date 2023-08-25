@@ -1,0 +1,160 @@
+name: AD4130 IIO no-OS
+on:
+  - push
+  - workflow_dispatch
+jobs:
+  build:
+    uses: ./.github/workflows/build-no-os.yaml
+    with:
+      macros: >-
+        NEW_CFLAGS="-DPLATFORM_NAME=${{ matrix.platform_name }}
+        -D${{ matrix.com_type }}
+        -D${{ matrix.sdram }}
+        -DACTIVE_DEMO_MODE_CONFIG=${{ matrix.active_demo_mode }}"
+      project: ad4130_iio
+    strategy:
+      matrix:
+        platform_name: [SDP-K1, NUCLEO_L552ZE_Q, DISCO_F769NI]
+        com_type: [USE_PHY_COM_PORT, USE_VIRTUAL_COM_PORT]
+        sdram: [USE_SDRAM, NO_SDRAM]
+        active_demo_mode:
+          - USER_DEFAULT_CONFIG
+          - RTD_2WIRE_CONFIG
+          - RTD_3WIRE_CONFIG
+          - RTD_4WIRE_CONFIG
+          - THERMISTOR_CONFIG
+          - THERMOCOUPLE_CONFIG
+          - LOADCELL_CONFIG
+          - ECG_CONFIG
+          - NOISE_TEST_CONFIG
+          - POWER_TEST_CONFIG
+        exclude:
+          - platform_name: NUCLEO_L552ZE_Q
+            sdram: USE_SDRAM
+          - platform_name: DISCO_F769NI
+            sdram: USE_SDRAM
+          - platform_name: NUCLEO_L552ZE_Q
+            com_type: USE_VIRTUAL_COM_PORT
+          - platform_name: DISCO_F769NI
+            com_type: USE_VIRTUAL_COM_PORT
+          - platform_name: NUCLEO_L552ZE_Q
+            active_demo_mode: RTD_2WIRE_CONFIG
+          - platform_name: NUCLEO_L552ZE_Q
+            active_demo_mode: RTD_3WIRE_CONFIG
+          - platform_name: NUCLEO_L552ZE_Q
+            active_demo_mode: RTD_4WIRE_CONFIG
+          - platform_name: NUCLEO_L552ZE_Q
+            active_demo_mode: THERMISTOR_CONFIG
+          - platform_name: NUCLEO_L552ZE_Q
+            active_demo_mode: THERMOCOUPLE_CONFIG
+          - platform_name: NUCLEO_L552ZE_Q
+            active_demo_mode: LOADCELL_CONFIG
+          - platform_name: NUCLEO_L552ZE_Q
+            active_demo_mode: ECG_CONFIG
+          - platform_name: NUCLEO_L552ZE_Q
+            active_demo_mode: NOISE_TEST_CONFIG
+          - platform_name: NUCLEO_L552ZE_Q
+            active_demo_mode: POWER_TEST_CONFIG
+          - platform_name: DISCO_F769NI
+            active_demo_mode: RTD_2WIRE_CONFIG
+          - platform_name: DISCO_F769NI
+            active_demo_mode: RTD_3WIRE_CONFIG
+          - platform_name: DISCO_F769NI
+            active_demo_mode: RTD_4WIRE_CONFIG
+          - platform_name: DISCO_F769NI
+            active_demo_mode: THERMISTOR_CONFIG
+          - platform_name: DISCO_F769NI
+            active_demo_mode: THERMOCOUPLE_CONFIG
+          - platform_name: DISCO_F769NI
+            active_demo_mode: LOADCELL_CONFIG
+          - platform_name: DISCO_F769NI
+            active_demo_mode: ECG_CONFIG
+          - platform_name: DISCO_F769NI
+            active_demo_mode: NOISE_TEST_CONFIG
+          - platform_name: DISCO_F769NI
+            active_demo_mode: POWER_TEST_CONFIG
+          - platform_name: SDP_K1
+            active_demo_mode: RTD_2WIRE_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_PHY_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: RTD_3WIRE_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_PHY_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: RTD_4WIRE_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_PHY_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: THERMISTOR_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_PHY_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: THERMOCOUPLE_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_PHY_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: LOADCELL_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_PHY_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: ECG_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_PHY_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: NOISE_TEST_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_PHY_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: POWER_TEST_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_PHY_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: RTD_2WIRE_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_VIRTUAL_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: RTD_3WIRE_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_VIRTUAL_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: RTD_4WIRE_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_VIRTUAL_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: THERMISTOR_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_VIRTUAL_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: THERMOCOUPLE_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_VIRTUAL_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: LOADCELL_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_VIRTUAL_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: ECG_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_VIRTUAL_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: NOISE_TEST_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_VIRTUAL_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: POWER_TEST_CONFIG
+            sdram: USE_SDRAM
+            com_type: USE_VIRTUAL_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: RTD_2WIRE_CONFIG
+            sdram: NO_SDRAM
+            com_type: USE_PHY_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: RTD_3WIRE_CONFIG
+            sdram: NO_SDRAM
+            com_type: USE_PHY_COM_PORT
+          - platform_name: SDP_K1
+            active_demo_mode: RTD_4WIRE_CONFIG
+            sdram: NO_SDRAM
+            com_type: USE_PHY_COM_PORT
+
