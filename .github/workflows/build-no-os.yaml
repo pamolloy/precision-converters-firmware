@@ -1,32 +1,15 @@
 name: no-OS
 on:
-  - push
-  - workflow_dispatch
+  workflow_call:
+    inputs:
+      macros:
+        type: string
+      project:
+        required: true
+        type: string
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        project:
-          - ad4130_iio
-          - ad559xr_console
-          - ad5770r_console
-          - ad590_console
-          - ad5933_console
-          - ad7124_console
-          - ad7124_temperature-measure
-          - ad7134_iio
-          - ad717x_console
-          - ad717x_iio
-          - ad719x_iio
-          - ad738x_iio
-          - ad7606_iio
-          - ad7689_iio
-          - ad77681_iio
-          - adt7420_console
-          - evb_discovery_firmware
-          - ltc268x_console
-          - nanodac_console
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -50,13 +33,15 @@ jobs:
           pip install -r requirements.txt
           popd
 
-          pushd projects/${{ matrix.project }}
+          pushd projects/${{ inputs.project }}
+          export ${{ inputs.macros }}
           make
+          cat build/ad4130_iio-cflags-names.txt
           popd
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.project }}
+          name: ${{ inputs.project }}
           path: |
-            projects/${{ matrix.project }}/build/${{ matrix.project }}.bin
+            projects/${{ inputs.project }}/build/${{ inputs.project }}.bin
