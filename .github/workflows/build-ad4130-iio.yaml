@@ -6,12 +6,11 @@ jobs:
   build:
     uses: ./.github/workflows/build-no-os.yaml
     with:
-      macros: >-
-        NEW_CFLAGS="-DPLATFORM_NAME=${{ matrix.platform_name }}
-        -D${{ matrix.com_type }}
-        -D${{ matrix.sdram }}
-        -DACTIVE_DEMO_MODE_CONFIG=${{ matrix.active_demo_mode }}"
       project: ad4130_iio
+      platform_name: ${{ matrix.platform_name }}
+      com_type: ${{ matrix.com_type }}
+      sdram: ${{ matrix.sdram }}
+      active_demo_mode: ${{ matrix.active_demo_mode }}
     strategy:
       matrix:
         platform_name: [SDP-K1, NUCLEO_L552ZE_Q, DISCO_F769NI]
