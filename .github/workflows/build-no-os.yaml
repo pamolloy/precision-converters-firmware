@@ -2,10 +2,16 @@ name: no-OS
 on:
   workflow_call:
     inputs:
-      macros:
-        type: string
       project:
         required: true
+        type: string
+      platform_name:
+        type: string
+      com_type:
+        type: string
+      sdram:
+        type: string
+      active_demo_mode:
         type: string
 jobs:
   build:
@@ -34,7 +40,7 @@ jobs:
           popd
 
           pushd projects/${{ inputs.project }}
-          export ${{ inputs.macros }}
+          export CFLAGS="-DPLATFORM_NAME=${{ inputs.platform_name }} -D${{ inputs.com_type }} -D${{ inputs.sdram }} -DACTIVE_DEMO_MODE_CONFIG=${{ inputs.active_demo_mode }}"
           make
           cat build/ad4130_iio-cflags-names.txt
           popd
@@ -42,6 +48,6 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ inputs.project }}
+          name: ${{ inputs.project }}-${{ inputs.platform_name }}-${{ inputs.com_type }}-${{ inputs.sdram }}-${{ inputs.active_demo_mode }}
           path: |
             projects/${{ inputs.project }}/build/${{ inputs.project }}.bin
